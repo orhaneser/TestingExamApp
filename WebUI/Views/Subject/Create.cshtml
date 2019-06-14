@@ -1,0 +1,59 @@
+﻿
+
+@model Examp.Dto.SubjectDto
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/UserLayout.cshtml";
+}
+@section Styles{
+    @Html.Partial("/Views/Shared/Partials/DataTable/_Css.cshtml")
+}
+<!-- page content -->
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>Konu Ekleme</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_content">
+                        <form class="form-horizontal form-label-left">
+                            <div class="form-group">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="text" class="form-control col-md-7 col-xs-12" id="Subject" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <a href="/Subject/List" type="button" class="btn btn-primary pull-right ">Listeye Dön</a>
+                                    <button type="submit" class="btn btn-success pull-right" id="btn">Kaydet</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /page content -->
+@section Scripts{
+    @Html.Partial("/Views/Shared/Partials/DataTable/_Js.cshtml")
+    <script>
+        $("#btn").click(function () {
+            var Subject = $("#Subject").val();
+            $.ajax({
+                url: '/Subject/Create',
+                type: "POST",
+                dataType: "json",
+                data: { SubjectText: Subject },
+                success: function (result) {
+                }
+            });
+        });
+    </script>
+}
+

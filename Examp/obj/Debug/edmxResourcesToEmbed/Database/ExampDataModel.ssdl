@@ -1,0 +1,221 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ExamModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Exam">
+    <Key>
+      <PropertyRef Name="ExamID" />
+    </Key>
+    <Property Name="ExamID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Exam" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Lesson">
+    <Key>
+      <PropertyRef Name="LessonID" />
+    </Key>
+    <Property Name="LessonID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="LessonText" Type="nchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="Option">
+    <Key>
+      <PropertyRef Name="OptionID" />
+    </Key>
+    <Property Name="OptionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OptionA" Type="nvarchar(max)" />
+    <Property Name="OptionB" Type="nvarchar(max)" />
+    <Property Name="OptionC" Type="nvarchar(max)" />
+    <Property Name="OptionD" Type="nvarchar(max)" />
+    <Property Name="OptionE" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="Question">
+    <Key>
+      <PropertyRef Name="QuestionID" />
+    </Key>
+    <Property Name="QuestionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="QuestionText" Type="nvarchar(max)" />
+    <Property Name="OptionID" Type="int" />
+    <Property Name="Difficult" Type="nvarchar" MaxLength="50" />
+    <Property Name="SubjectID" Type="int" />
+    <Property Name="SubText" Type="nvarchar(max)" />
+    <Property Name="AnswerKey" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Subject">
+    <Key>
+      <PropertyRef Name="SubjectID" />
+    </Key>
+    <Property Name="SubjectID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SubjectText" Type="nvarchar(max)" />
+  </EntityType>
+  <EntityType Name="SubjectLesson">
+    <Key>
+      <PropertyRef Name="SubjectLessonID" />
+    </Key>
+    <Property Name="SubjectLessonID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SubjectID" Type="int" />
+    <Property Name="LessonID" Type="int" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar(max)" />
+    <Property Name="UserSurname" Type="nvarchar(max)" />
+    <Property Name="Mail" Type="nvarchar(max)" />
+    <Property Name="Password" Type="nvarchar(max)" />
+    <Property Name="Role" Type="bit" />
+  </EntityType>
+  <EntityType Name="UserExam">
+    <Key>
+      <PropertyRef Name="UserExamID" />
+    </Key>
+    <Property Name="UserExamID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="int" />
+    <Property Name="ExamID" Type="int" />
+  </EntityType>
+  <EntityType Name="UserQuestion">
+    <Key>
+      <PropertyRef Name="UserQuestionID" />
+    </Key>
+    <Property Name="UserQuestionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="QuestionID" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Exam_ToTable">
+    <End Role="Exam" Type="Self.Exam" Multiplicity="0..1" />
+    <End Role="UserExam" Type="Self.UserExam" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Exam">
+        <PropertyRef Name="ExamID" />
+      </Principal>
+      <Dependent Role="UserExam">
+        <PropertyRef Name="ExamID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Lesson">
+    <End Role="Lesson" Type="Self.Lesson" Multiplicity="0..1" />
+    <End Role="SubjectLesson" Type="Self.SubjectLesson" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lesson">
+        <PropertyRef Name="LessonID" />
+      </Principal>
+      <Dependent Role="SubjectLesson">
+        <PropertyRef Name="LessonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Option">
+    <End Role="Option" Type="Self.Option" Multiplicity="0..1" />
+    <End Role="Question" Type="Self.Question" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Option">
+        <PropertyRef Name="OptionID" />
+      </Principal>
+      <Dependent Role="Question">
+        <PropertyRef Name="OptionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Subject">
+    <End Role="Subject" Type="Self.Subject" Multiplicity="0..1" />
+    <End Role="SubjectLesson" Type="Self.SubjectLesson" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Subject">
+        <PropertyRef Name="SubjectID" />
+      </Principal>
+      <Dependent Role="SubjectLesson">
+        <PropertyRef Name="SubjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SubjectID">
+    <End Role="Subject" Type="Self.Subject" Multiplicity="0..1" />
+    <End Role="Question" Type="Self.Question" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Subject">
+        <PropertyRef Name="SubjectID" />
+      </Principal>
+      <Dependent Role="Question">
+        <PropertyRef Name="SubjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_ToTable">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="UserExam" Type="Self.UserExam" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="UserExam">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserQuestion_ToQuestion">
+    <End Role="Question" Type="Self.Question" Multiplicity="1" />
+    <End Role="UserQuestion" Type="Self.UserQuestion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Question">
+        <PropertyRef Name="QuestionID" />
+      </Principal>
+      <Dependent Role="UserQuestion">
+        <PropertyRef Name="QuestionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserQuestion_ToUser">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="UserQuestion" Type="Self.UserQuestion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="UserQuestion">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ExamModelStoreContainer">
+    <EntitySet Name="Exam" EntityType="Self.Exam" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Lesson" EntityType="Self.Lesson" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Option" EntityType="Self.Option" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Question" EntityType="Self.Question" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Subject" EntityType="Self.Subject" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SubjectLesson" EntityType="Self.SubjectLesson" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserExam" EntityType="Self.UserExam" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UserQuestion" EntityType="Self.UserQuestion" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Exam_ToTable" Association="Self.FK_Exam_ToTable">
+      <End Role="Exam" EntitySet="Exam" />
+      <End Role="UserExam" EntitySet="UserExam" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Lesson" Association="Self.FK_Lesson">
+      <End Role="Lesson" EntitySet="Lesson" />
+      <End Role="SubjectLesson" EntitySet="SubjectLesson" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Option" Association="Self.FK_Option">
+      <End Role="Option" EntitySet="Option" />
+      <End Role="Question" EntitySet="Question" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Subject" Association="Self.FK_Subject">
+      <End Role="Subject" EntitySet="Subject" />
+      <End Role="SubjectLesson" EntitySet="SubjectLesson" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SubjectID" Association="Self.FK_SubjectID">
+      <End Role="Subject" EntitySet="Subject" />
+      <End Role="Question" EntitySet="Question" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_ToTable" Association="Self.FK_User_ToTable">
+      <End Role="User" EntitySet="User" />
+      <End Role="UserExam" EntitySet="UserExam" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserQuestion_ToQuestion" Association="Self.FK_UserQuestion_ToQuestion">
+      <End Role="Question" EntitySet="Question" />
+      <End Role="UserQuestion" EntitySet="UserQuestion" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserQuestion_ToUser" Association="Self.FK_UserQuestion_ToUser">
+      <End Role="User" EntitySet="User" />
+      <End Role="UserQuestion" EntitySet="UserQuestion" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

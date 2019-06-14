@@ -1,0 +1,208 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Styles{
+    @Html.Partial("/Views/Shared/Partials/DataTable/_Css.cshtml")
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link href="~/Content/QuestionForm/WizardForm.css" rel="stylesheet" />
+
+    <style>
+    </style>
+}
+<div class="right_col" role="main">
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_title">
+                <h2>Soru Giriş Ekranı</h2>
+                <div class="clearfix"></div>
+            </div>
+            <form id="regForm" action="#" method="post">
+                <h1>Soru Hazırlama Ekranı</h1>
+                <br />
+                <div class="tab">
+                    Ders Adı:
+                    <p> @Html.DropDownList("LessonID", new SelectList(ViewBag.lesson, "LessonID", "LessonText", 0), new { @class = "form-control" })</p>
+                    <br />
+                    <p> <select class=" form-control" id="Subject"></select></p>
+                    <br />
+                    <div style="float:right;">
+                        <button type="button" id="prevBtn" onclick="nextPrev(-1)">Geri</button>
+                        <button type="button" id="nextBtn" onclick="nextPrev(1)" name="1">İleri</button>
+                    </div>
+                </div>
+                <div class="tab">
+                    <p>
+                        <div class="container">
+                            <div class="row">
+                            </div>
+                            <div class="row">
+                            </div>
+                            <label class="form-group col-sm-6">
+                                <span class="textarea-label">Soru Metni *</span>
+                                <textarea rows="1" class="form-control js-elasticArea" id="textarea"></textarea>
+                                <span id="pccount"></span>
+                            </label>
+                            <label class="form-group col-sm-6">
+                                <span class="textarea-label">Var ise soru önü metni</span>
+                                <textarea rows="1" class="form-control js-elasticArea" id="textarea1"></textarea>
+                            </label>
+                        </div>
+                    </p>
+                    <div style="float:right;">
+                        <button type="button" id="prevBtn" onclick="nextPrev(-1)">Geri</button>
+                        <button type="button" id="nextBtn" onclick="nextPrev(1)" name="2">İleri</button>
+                    </div>
+                </div>
+                <div class="tab">
+                    <p>Doğru Şık Seçiniz</p>
+                    <div id="radios" class="btn-group" data-toggle="buttons">
+                        <label class="btn btn-default">
+                            <input type="radio" name="options" id="option1" value="A" /> A
+                        </label>
+                        <label class="btn btn-default">
+                            <input type="radio" name="options" id="option2" value="B" /> B
+                        </label>
+                        <label class="btn btn-default">
+                            <input type="radio" name="options" id="option3" value="C" /> C
+                        </label>
+                        <label class="btn btn-default">
+                            <input type="radio" name="options" id="option3" value="D" /> D
+                        </label>
+                        <label class="btn btn-default">
+                            <input type="radio" name="options" id="option3" value="E" /> E
+                        </label>
+                    </div>
+                    <div id="exampleContainer">
+                        <br />
+                        <div class="input-group">
+                            <div class="form-group has-feedback has-clear">
+                                <input type="text" class="form-control" id="exampleInput1">
+                                <span class="form-control-clear glyphicon glyphicon-remove form-control-feedback hidden"></span>
+                            </div>
+                            <span class="input-group-addon">A</span>
+                        </div><br />
+                        <div class="input-group">
+                            <div class="form-group has-feedback has-clear">
+                                <input type="text" class="form-control" id="exampleInput2">
+                                <span class="form-control-clear glyphicon glyphicon-remove form-control-feedback hidden"></span>
+                            </div>
+                            <span class="input-group-addon">B</span>
+                        </div><br />
+                        <div class="input-group">
+                            <div class="form-group has-feedback has-clear">
+                                <input type="text" class="form-control" id="exampleInput3">
+                                <span class="form-control-clear glyphicon glyphicon-remove form-control-feedback hidden"></span>
+                            </div>
+                            <span class="input-group-addon">C</span>
+                        </div><br />
+                        <div class="input-group">
+                            <div class="form-group has-feedback has-clear">
+                                <input type="text" class="form-control" id="exampleInput4">
+                                <span class="form-control-clear glyphicon glyphicon-remove form-control-feedback hidden"></span>
+                            </div>
+                            <span class="input-group-addon">D</span>
+                        </div><br />
+                        <div class="input-group">
+                            <div class="form-group has-feedback has-clear">
+                                <input type="text" class="form-control" id="exampleInput5">
+                                <span class="form-control-clear glyphicon glyphicon-remove form-control-feedback hidden"></span>
+                            </div>
+                            <span class="input-group-addon">E</span>
+                        </div>
+                        <p>Doğru Şık Seçiniz</p>
+                        <div id="radios" class="btn-group " data-toggle="buttons">
+                            <label class="btn btn-default">
+                                <input type="radio" name="dif" id="dif1" value="1" selected /> 1
+                            </label>
+                            <label class="btn btn-default">
+                                <input type="radio" name="dif" id="dif2" value="2" /> 2
+                            </label>
+                            <label class="btn btn-default">
+                                <input type="radio" name="dif" id="dif3" value="3" /> 3
+                            </label>
+                            <label class="btn btn-default">
+                                <input type="radio" name="dif" id="dif4" value="4" /> 4
+                            </label>
+                            <label class="btn btn-default">
+                                <input type="radio" name="dif" id="dif5" value="5" /> 5
+                            </label>
+                        </div>
+                    </div>
+                    <div style="float:right;">
+                        <button type="button" id="prevBtn" onclick="nextPrev(-1)">Geri</button>
+                        <button type="button" id="nextBtn3" onclick="nextPrev(1)">İleri</button>
+                    </div>
+                </div>
+                <div class="tab">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-block">
+                                        <h6 class="card-title">
+                                            <span id="subtext">Soru Önü Metni</span>
+                                        </h6>
+                                        <h5 class="card-title">
+                                            <span id="question">Soru Metni</span>
+                                        </h5>
+                                        <p class="card-text" id="A"></p>
+                                        <p class="card-text" id="B"></p>
+                                        <p class="card-text" id="C"></p>
+                                        <p class="card-text" id="D"></p>
+                                        <p class="card-text" id="E"></p>
+
+                                    </div>
+                                    <div class="card-footer">
+                                        <p class="card-text text-right" id="key"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="float:right;">
+                        <button type="button" id="prevBtn" onclick="nextPrev(-1)">Geri</button>
+                        <button type="button" id="nextBtn4" onclick="nextPrev(1)">Son</button>
+                    </div>
+                </div>
+                <div style="text-align:center;margin-top:40px;">
+                    <span class="step"></span>
+                    <span class="step"></span>
+                    <span class="step"></span>
+                    <span class="step"></span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    @Html.Partial("/Views/Shared/Partials/DataTable/_Js.cshtml")
+    <script src="~/Content/QuestionForm/WizardForm.js"></script>
+
+    <script>
+        $('#Subject').select2();
+        $('#LessonID').select2();
+        $("#nextBtn3").click(function () {
+            var text1 = $("#textarea1").val();
+            var text = $("#textarea").val();
+            var Input1 = document.getElementById("exampleInput1").value;
+            var Input2 = document.getElementById("exampleInput2").value;
+            var Input3 = document.getElementById("exampleInput3").value;
+            var Input4 = document.getElementById("exampleInput4").value;
+            var Input5 = document.getElementById("exampleInput5").value;
+            $("#subtext").html(text1);
+            $("#question").html(text);
+            $("#A").html("A-) " + Input1);
+            $("#B").html("B-) " + Input2);
+            $("#C").html("C-) " + Input3);
+            $("#D").html("D-) " + Input4);
+            $("#E").html("E-) " + Input5);
+            $("#key").html("Zorluk  " + dif + " Doğru  " + radio);
+
+
+        });
+
+    </script>
+}

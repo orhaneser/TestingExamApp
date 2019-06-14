@@ -1,0 +1,181 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ExamModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Exam">
+    <Key>
+      <PropertyRef Name="ExamID" />
+    </Key>
+    <Property Name="ExamID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="Exam1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Exam_UserID" FromRole="Exam" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Lesson">
+    <Key>
+      <PropertyRef Name="LessonID" />
+    </Key>
+    <Property Name="LessonID" Type="Int32" Nullable="false" />
+    <Property Name="LessonText" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="SubjectLesson" Relationship="Self.FK_Lesson" FromRole="Lesson" ToRole="SubjectLesson" />
+  </EntityType>
+  <EntityType Name="Option">
+    <Key>
+      <PropertyRef Name="OptionID" />
+    </Key>
+    <Property Name="OptionID" Type="Int32" Nullable="false" />
+    <Property Name="OptionText" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="Question" Relationship="Self.FK_Option" FromRole="Option" ToRole="Question" />
+  </EntityType>
+  <EntityType Name="Question">
+    <Key>
+      <PropertyRef Name="QuestionID" />
+    </Key>
+    <Property Name="QuestionID" Type="Int32" Nullable="false" />
+    <Property Name="QuestionText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="OptionID" Type="Int32" />
+    <Property Name="C_Class" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Difficult" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="UserID" Type="Int32" />
+    <Property Name="SubjectID" Type="Int32" />
+    <Property Name="SubText" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="AnswerKey" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="Option" Relationship="Self.FK_Option" FromRole="Question" ToRole="Option" />
+    <NavigationProperty Name="Subject" Relationship="Self.FK_SubjectID" FromRole="Question" ToRole="Subject" />
+    <NavigationProperty Name="User" Relationship="Self.FK_UserID" FromRole="Question" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Subject">
+    <Key>
+      <PropertyRef Name="SubjectID" />
+    </Key>
+    <Property Name="SubjectID" Type="Int32" Nullable="false" />
+    <Property Name="SubjectText" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="SubjectLessonID" Type="Int32" />
+    <NavigationProperty Name="Question" Relationship="Self.FK_SubjectID" FromRole="Subject" ToRole="Question" />
+    <NavigationProperty Name="SubjectLesson" Relationship="Self.FK_Subject" FromRole="Subject" ToRole="SubjectLesson" />
+  </EntityType>
+  <EntityType Name="SubjectLesson">
+    <Key>
+      <PropertyRef Name="SubjectLessonID" />
+    </Key>
+    <Property Name="SubjectLessonID" Type="Int32" Nullable="false" />
+    <Property Name="SubjectID" Type="Int32" />
+    <Property Name="LessonID" Type="Int32" />
+    <NavigationProperty Name="Lesson" Relationship="Self.FK_Lesson" FromRole="SubjectLesson" ToRole="Lesson" />
+    <NavigationProperty Name="Subject" Relationship="Self.FK_Subject" FromRole="SubjectLesson" ToRole="Subject" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" />
+    <Property Name="UserName" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="UserSurname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Mail" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Exam" Relationship="Self.FK_Exam_UserID" FromRole="User" ToRole="Exam" />
+    <NavigationProperty Name="Question" Relationship="Self.FK_UserID" FromRole="User" ToRole="Question" />
+  </EntityType>
+  <Association Name="FK_Exam_UserID">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="Exam" Type="Self.Exam" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Exam">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Lesson">
+    <End Role="Lesson" Type="Self.Lesson" Multiplicity="0..1" />
+    <End Role="SubjectLesson" Type="Self.SubjectLesson" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lesson">
+        <PropertyRef Name="LessonID" />
+      </Principal>
+      <Dependent Role="SubjectLesson">
+        <PropertyRef Name="LessonID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Option">
+    <End Role="Option" Type="Self.Option" Multiplicity="0..1" />
+    <End Role="Question" Type="Self.Question" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Option">
+        <PropertyRef Name="OptionID" />
+      </Principal>
+      <Dependent Role="Question">
+        <PropertyRef Name="OptionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SubjectID">
+    <End Role="Subject" Type="Self.Subject" Multiplicity="0..1" />
+    <End Role="Question" Type="Self.Question" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Subject">
+        <PropertyRef Name="SubjectID" />
+      </Principal>
+      <Dependent Role="Question">
+        <PropertyRef Name="SubjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_UserID">
+    <End Role="User" Type="Self.User" Multiplicity="0..1" />
+    <End Role="Question" Type="Self.Question" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Question">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Subject">
+    <End Role="Subject" Type="Self.Subject" Multiplicity="0..1" />
+    <End Role="SubjectLesson" Type="Self.SubjectLesson" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Subject">
+        <PropertyRef Name="SubjectID" />
+      </Principal>
+      <Dependent Role="SubjectLesson">
+        <PropertyRef Name="SubjectID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ExamEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Exam" EntityType="Self.Exam" />
+    <EntitySet Name="Lesson" EntityType="Self.Lesson" />
+    <EntitySet Name="Option" EntityType="Self.Option" />
+    <EntitySet Name="Question" EntityType="Self.Question" />
+    <EntitySet Name="Subject" EntityType="Self.Subject" />
+    <EntitySet Name="SubjectLesson" EntityType="Self.SubjectLesson" />
+    <EntitySet Name="User" EntityType="Self.User" />
+    <AssociationSet Name="FK_Exam_UserID" Association="Self.FK_Exam_UserID">
+      <End Role="User" EntitySet="User" />
+      <End Role="Exam" EntitySet="Exam" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Lesson" Association="Self.FK_Lesson">
+      <End Role="Lesson" EntitySet="Lesson" />
+      <End Role="SubjectLesson" EntitySet="SubjectLesson" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Option" Association="Self.FK_Option">
+      <End Role="Option" EntitySet="Option" />
+      <End Role="Question" EntitySet="Question" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SubjectID" Association="Self.FK_SubjectID">
+      <End Role="Subject" EntitySet="Subject" />
+      <End Role="Question" EntitySet="Question" />
+    </AssociationSet>
+    <AssociationSet Name="FK_UserID" Association="Self.FK_UserID">
+      <End Role="User" EntitySet="User" />
+      <End Role="Question" EntitySet="Question" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Subject" Association="Self.FK_Subject">
+      <End Role="Subject" EntitySet="Subject" />
+      <End Role="SubjectLesson" EntitySet="SubjectLesson" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

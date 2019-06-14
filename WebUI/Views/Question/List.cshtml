@@ -1,0 +1,337 @@
+﻿@model  PagedList.IPagedList<Examp.Dto.UserQuestionDto>
+@using PagedList.Mvc;
+
+@{
+    /**/
+
+    ViewBag.Title = "List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Styles{
+    @Html.Partial("/Views/Shared/Partials/DataTable/_Css.cshtml")
+    <style>
+    </style>
+}
+<div class="right_col" role="main">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>Sorularım</h3>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="">
+            @foreach (var item in Model)
+            {
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                                <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+                                    <li role="presentation" class="active">
+                                        <a href="#@Html.DisplayFor(modelItem => item.QuestionID)1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Soru</a>
+                                    </li>
+                                    <li role="presentation" class="">
+                                        <a href="#@Html.DisplayFor(modelItem => item.QuestionID)2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Şıklar</a>
+                                    </li>
+                                    <li role="presentation" class="">
+                                        <a href="#@Html.DisplayFor(modelItem => item.QuestionID)3" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Bilgi</a>
+                                    </li>
+                                    <li role="presentation">
+                                        <button id="@Html.DisplayFor(modelItem => item.QuestionID)" type="button" class="btn btn-success" data-toggle="modal" data-target="#modal1"><i class="fa fa-plus"></i></button>
+                                    </li>
+                                    <li>
+                                        <button id="@Html.DisplayFor(modelItem => item.QuestionID)" type="button" class="btn btn-danger" onclick="Delete()"><i class="fa fa-trash" aria-hidden="true" id="delete"></i></button>
+                                    </li>
+                                </ul>
+                                <div id="myTabContent" class="tab-content">
+
+                                    <div role="tabpanel" class="tab-pane fade active in" id="@Html.DisplayFor(modelItem => item.QuestionID)1" aria-labelledby="home-tab">
+                                        <p>
+                                            <h6><b>Soru Önü Metini :</b></h6> @Html.DisplayFor(modelItem => item.questionDto.SubText)<br /><br />
+                                            <h5><b>Soru Metni:</b></h5> @Html.DisplayFor(modelItem => item.questionDto.QuestionText)
+                                        </p>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane fade" id="@Html.DisplayFor(modelItem => item.QuestionID)2" aria-labelledby="profile-tab">
+                                        <p id=@Html.HiddenFor(modelItem =>item.optionDto.OptionID) class="option"></p>
+                                        A-)@Html.DisplayFor(modelItem => item.optionDto.OptionA)<br /><br />
+                                        B-)@Html.DisplayFor(modelItem => item.optionDto.OptionB)<br /><br />
+                                        C-)@Html.DisplayFor(modelItem => item.optionDto.OptionC)<br /><br />
+                                        D-)@Html.DisplayFor(modelItem => item.optionDto.OptionD)<br /><br />
+                                        E-)@Html.DisplayFor(modelItem => item.optionDto.OptionE)<br /><br />
+
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane fade" id="@Html.DisplayFor(modelItem => item.QuestionID)3" aria-labelledby="profile-tab">
+                                        <p>
+                                            <h6><b>Zorluk Derecesi</b></h6> @Html.DisplayFor(modelItem => item.questionDto.Difficult)<br />
+                                            <h6><b>Doğru Cevap</b></h6> @Html.DisplayFor(modelItem => item.questionDto.AnswerKey)
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            }
+            <div class="pagedList">
+                @Html.PagedListPager(Model,page => Url.Action("List",
+               new { page, pageSize = Model.PageSize}))
+                Showing
+                @Model.FirstItemOnPage
+                to
+                @Model.LastItemOnPage of
+                @Model.Count()
+            </div>
+        </div>
+
+        <div class="clearfix"></div>
+    </div>
+</div>
+@* modal *@
+<form>
+    <div class="modal fade bs-example-modal-sm" id="modal1" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel2">Yeni Ünvan</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="item form-group">
+                        <div class="x_content">
+                            <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                                <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+                                    <li role="presentation" class="active">
+                                        <a href="#1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Soru</a>
+                                    </li>
+                                    <li role="presentation" class="">
+                                        <a href="#2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Şıklar</a>
+                                    </li>
+                                    <li role="presentation" class="">
+                                        <a href="#3" role="tab" id="profile-tab2" data-toggle="tab" aria-expanded="false">Bilgi</a>
+                                    </li>
+                                </ul>
+                                <div id="myTabContent" class="tab-content">
+
+                                    <div role="tabpanel" class="tab-pane fade active in" id="1" aria-labelledby="home-tab">
+                                        <p>
+                                            <b>Soru Önü Metni:<br /></b>
+                                            <span id="subtext" contenteditable="true"></span>
+                                        </p>
+                                        <p>
+                                            <b>Soru Metni:<br /></b>
+                                            <span id="question" contenteditable="true"></span>
+
+                                        </p>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane fade" id="2" aria-labelledby="profile-tab">
+                                        <p>
+                                            A-)
+                                            <span id="A" contenteditable="true"></span>
+                                        </p>
+                                        <p>
+                                            B-)
+                                            <span id="B" contenteditable="true"></span>
+                                        </p>
+                                        <p>
+                                            C-)
+                                            <span id="C" contenteditable="true"></span>
+                                        </p>
+                                        <p>
+                                            D-)
+                                            <span id="D" contenteditable="true"></span>
+                                        </p>
+                                        <p>
+                                            E-)
+                                            <span id="E" contenteditable="true"></span>
+                                        </p>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane fade" id="3" aria-labelledby="profile-tab">
+                                        <p>Doğru Şık </p>
+                                        <div id="radios" class="btn-group" data-toggle="buttons">
+                                            <label class="btn btn-default">
+                                                <input type="radio" name="options" id="option1" value="A" /> A
+                                            </label>
+                                            <label class="btn btn-default">
+                                                <input type="radio" name="options" id="option2" value="B" /> B
+                                            </label>
+                                            <label class="btn btn-default">
+                                                <input type="radio" name="options" id="option3" value="C" /> C
+                                            </label>
+                                            <label class="btn btn-default">
+                                                <input type="radio" name="options" id="option3" value="D" /> D
+                                            </label>
+                                            <label class="btn btn-default">
+                                                <input type="radio" name="options" id="option3" value="E" /> E
+                                            </label>
+                                        </div><br />
+                                        <br />
+                                        <p>Zorluk Derecesi</p>
+                                        <div id="radios" class="btn-group" data-toggle="buttons">
+                                            <label class="btn btn-default">
+                                                <input type="radio" name="dif" id="dif1" value="1" /> 1
+                                            </label>
+                                            <label class="btn btn-default">
+                                                <input type="radio" name="dif" id="dif2" value="2" /> 2
+                                            </label>
+                                            <label class="btn btn-default">
+                                                <input type="radio" name="dif" id="dif3" value="3" /> 3
+                                            </label>
+                                            <label class="btn btn-default">
+                                                <input type="radio" name="dif" id="dif4" value="4" /> 4
+                                            </label>
+                                            <label class="btn btn-default">
+                                                <input type="radio" name="dif" id="dif5" value="5" /> 5
+                                            </label><br />
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="Messagetitle"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Vazgeç</button>
+                    <button type="submit" id="modalbtn" class="btn btn-primary">Ekle</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+@*/ modal *@
+@section Scripts{
+    @Html.Partial("/Views/Shared/Partials/DataTable/_Js.cshtml")
+    <script>
+        var QuestionID;
+        var optionID;
+        var questionID;
+        var subjectID;
+        $(".btn").click(function () {
+            var questionText;
+            var Subtext;
+            var A;
+            var B;
+            var C;
+            var D;
+            var E;
+            var dif;
+            var ans;
+            var i = 0;
+            QuestionID = this.id;
+            $.ajax({
+                url: '/Question/QuestionList',
+                type: "POST",
+                dataType: "json",
+                data: { UserQuestionID: QuestionID },
+                success: function (result) {
+                    $.each(result, function () {
+                        optionID = result[i].optionDto.OptionID;
+                        questionID = result[i].QuestionID;
+                        subjectID = result[i].subjectDto.SubjectID;
+                        A = result[i].optionDto.OptionA;
+                        B = result[i].optionDto.OptionB;
+                        C = result[i].optionDto.OptionC;
+                        D = result[i].optionDto.OptionD;
+                        E = result[i].optionDto.OptionE;
+                        Subtext = result[i].questionDto.SubText;
+                        questionText = result[i].questionDto.QuestionText;
+                        dif = result[i].questionDto.Difficult;
+                        ans = result[i].questionDto.AnswerKey;
+                        $("#subtext").text(Subtext);
+                        $("#question").text(questionText);
+                        $("#A").text(A);
+                        $("#B").text(B);
+                        $("#C").text(C);
+                        $("#D").text(D);
+                        $("#E").text(E);
+                        $("input:radio[value=" + ans + "]").click();
+                        $("input:radio[value=" + dif + "]").click();
+                        i++;
+                        edit();
+                    });
+                }
+            });
+        });
+        function edit() {
+            $("#modalbtn").click(function () {
+                var radio;
+                $(document).ready(function () {
+                    radio = $("input[name='options']:checked").val();
+                    $('input:radio[name=options]').change(function () {
+                        radio = $("input[name='options']:checked").val();
+                    });
+                });
+                var dif;
+                $(document).ready(function () {
+                    dif = $("input[name='dif']:checked").val();
+                    $('input:radio[name=dif]').change(function () {
+                        dif = $("input[name='dif']:checked").val();
+                    });
+                });
+                var text = $('#subtext').text();
+                var text1 = $('#question').text();
+                var Input1 = $('#A').text();
+                var Input2 = $('#B').text();
+                var Input3 = $('#C').text();
+                var Input4 = $('#D').text();
+                var Input5 = $('#E').text();
+                radio;
+                dif;
+                $.ajax({
+                    url: '/Question/EditQuestion',
+                    type: "Post",
+                    dataType: "json",
+                    data: { subjectID: subjectID, UserQuestionID: questionID, optionID: optionID, OptionA: Input1, OptionB: Input2, OptionC: Input3, OptionD: Input4, OptionE: Input5, Text: text1, SubText: text, radio: radio, difficult: dif },
+                    success: function (result) {
+                        alert("İşlem Başarılı");
+                        location.reload();
+
+                    }
+                });
+            });
+        }
+        var DeletequestionID;
+        var DeleteUserQuestion;
+        function Delete() {
+            $(".btn.btn-danger").click(function () {
+                var j = 0;
+                var removeID = this.id;
+                $.ajax({
+                    url: '/Question/GetUserQuestionID',
+                    type: "Post",
+                    dataType: "json",
+                    data: { Id: removeID },
+                    success: function (result) {
+                        DeleteUserQuestion = result[j].UserQuestionID;
+                        DeletequestionID = result[j].QuestionID;
+                        deletequestion();
+                        j++;
+                    }
+                });
+            });
+            function deletequestion() {
+                $.ajax({
+                    url: '/Question/Delete',
+                    type: "Post",
+                    dataType: "json",
+                    data: { DeletequestionID: DeletequestionID, DeleteUserQuestion: DeleteUserQuestion },
+                    success: function (result) {
+                        alert("İşlem Başarılı");
+                        location.reload();
+                    }
+                });
+            }
+        }
+
+
+    </script>
+}

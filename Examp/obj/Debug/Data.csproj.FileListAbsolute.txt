@@ -1,0 +1,14 @@
+C:\Users\orhaneser\source\repos\Examp\Examp\bin\Debug\Examp.dll.config
+C:\Users\orhaneser\source\repos\Examp\Examp\bin\Debug\Examp.dll
+C:\Users\orhaneser\source\repos\Examp\Examp\bin\Debug\Examp.pdb
+C:\Users\orhaneser\source\repos\Examp\Examp\bin\Debug\EntityFramework.dll
+C:\Users\orhaneser\source\repos\Examp\Examp\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\orhaneser\source\repos\Examp\Examp\bin\Debug\Newtonsoft.Json.dll
+C:\Users\orhaneser\source\repos\Examp\Examp\bin\Debug\EntityFramework.xml
+C:\Users\orhaneser\source\repos\Examp\Examp\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\orhaneser\source\repos\Examp\Examp\bin\Debug\Newtonsoft.Json.xml
+C:\Users\orhaneser\source\repos\Examp\Examp\obj\Debug\Data.csproj.CoreCompileInputs.cache
+C:\Users\orhaneser\source\repos\Examp\Examp\obj\Debug\Data.csproj.CopyComplete
+C:\Users\orhaneser\source\repos\Examp\Examp\obj\Debug\Examp.dll
+C:\Users\orhaneser\source\repos\Examp\Examp\obj\Debug\Examp.pdb
+C:\Users\orhaneser\source\repos\Examp\Examp\obj\Debug\Data.csprojAssemblyReference.cache

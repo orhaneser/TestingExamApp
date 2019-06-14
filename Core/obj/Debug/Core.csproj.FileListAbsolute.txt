@@ -1,0 +1,17 @@
+C:\Users\orhaneser\source\repos\Examp\Core\bin\Debug\Core.dll.config
+C:\Users\orhaneser\source\repos\Examp\Core\bin\Debug\Core.dll
+C:\Users\orhaneser\source\repos\Examp\Core\bin\Debug\Core.pdb
+C:\Users\orhaneser\source\repos\Examp\Core\bin\Debug\EntityFramework.dll
+C:\Users\orhaneser\source\repos\Examp\Core\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\orhaneser\source\repos\Examp\Core\bin\Debug\Examp.dll
+C:\Users\orhaneser\source\repos\Examp\Core\bin\Debug\Newtonsoft.Json.dll
+C:\Users\orhaneser\source\repos\Examp\Core\bin\Debug\Examp.pdb
+C:\Users\orhaneser\source\repos\Examp\Core\bin\Debug\Examp.dll.config
+C:\Users\orhaneser\source\repos\Examp\Core\bin\Debug\EntityFramework.xml
+C:\Users\orhaneser\source\repos\Examp\Core\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\orhaneser\source\repos\Examp\Core\bin\Debug\Newtonsoft.Json.xml
+C:\Users\orhaneser\source\repos\Examp\Core\obj\Debug\Core.csprojAssemblyReference.cache
+C:\Users\orhaneser\source\repos\Examp\Core\obj\Debug\Core.csproj.CoreCompileInputs.cache
+C:\Users\orhaneser\source\repos\Examp\Core\obj\Debug\Core.csproj.CopyComplete
+C:\Users\orhaneser\source\repos\Examp\Core\obj\Debug\Core.dll
+C:\Users\orhaneser\source\repos\Examp\Core\obj\Debug\Core.pdb

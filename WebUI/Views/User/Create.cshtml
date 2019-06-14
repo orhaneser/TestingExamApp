@@ -1,0 +1,143 @@
+﻿@{
+    Layout = null;
+}
+<html>
+<head>
+    <link rel="stylesheet" type="text/css"
+          href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link href="~/Content/UserLogin/record.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+    <script src="~/Content/UserLogin/record.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.5.0/js/md5.min.js"></script>
+
+</head>
+<body background="~/Content/UserLogin/UserLogin.jpg">
+    <div id="login-page" class="row">
+        <div class="col s12 z-depth-4 card-panel">
+            <form class="login-form" method="post">
+                <div class="row">
+                    <div class="input-field col s12 center">
+                        <h4>Kayıt Ol</h4>
+                        <p class="center">Üstelik çok kolay</p>
+                    </div>
+                </div>
+                <div class="row margin">
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">email</i>
+                        <input id="email" name="email" type="text" pattern="^[a-zA-Z0-9._+-]+@("@")[a-zA-Z0-9.-]+\.[a-zA-Z]{2,9}$" required style="cursor: auto;" />
+                        <label for="email">E-Posta</label>
+                    </div>
+                </div>
+                <div class="row margin">
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">vpn_key</i>
+                        <input id="password" name="password" pattern="^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$" required type="password" />
+                        <label for="password">Parola</label>
+                    </div>
+                </div>
+                <div class="row margin">
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">vpn_key</i>
+                        <input id="password_a" name="cpassword" required type="password" />
+                        <label for="password_a">Parola Tekrarı</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field col s12">
+                        <button id="create" type="submit" class="btn waves-effect waves-light col s12">Kaydet</button>
+                    </div>
+                    <div class="input-field col s12">
+                        <p class="margin center medium-small sign-up">
+                            Zaten hesabınız var mı? <a href="~/Login/Login">Giriş</a>
+                        </p>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    (function (exports) {
+        function valOrFunction(val, ctx, args) {
+            if (typeof val == "function") {
+                return val.apply(ctx, args);
+            } else {
+                return val;
+            }
+        }
+        function InvalidInputHelper(input, options) {
+            input.setCustomValidity(valOrFunction(options.defaultText, window, [input]));
+            function changeOrInput() {
+                if (input.value == "") {
+                    input.setCustomValidity(valOrFunction(options.emptyText, window, [input]));
+                } else {
+                    input.setCustomValidity("");
+                }
+            }
+            function invalid() {
+                if (input.value == "") {
+                    input.setCustomValidity(valOrFunction(options.emptyText, window, [input]));
+                } else {
+                    input.setCustomValidity(valOrFunction(options.invalidText, window, [input]));
+                }
+            }
+            input.addEventListener("change", changeOrInput);
+            input.addEventListener("input", changeOrInput);
+            input.addEventListener("invalid", invalid);
+        }
+        exports.InvalidInputHelper = InvalidInputHelper;
+    })(window);
+    $("#email").change(function () {
+        var i = 0;
+        var Mail = $("#email").val();
+        $.ajax({
+            url: '/User/User',
+            type: "POST",
+            dataType: "json",
+            success: function (result) {
+                $.each(result, function () {
+                    if (Mail == result[i].Mail) {
+                        InvalidInputHelper(document.getElementById("email"), {
+                            emptyText: "E-Posta Zorunlu",
+                            invalidText: function (input) {
+                                return ' "' + input.value + '" Daha önceden kayıtlı e-Posta';
+                            }
+                        });
+                    }
+                    i++;
+                });
+            }
+        });
+    });
+    $("#create").click(function () {
+        if ($('#password').val() !== $('#password_a').val()) {
+            InvalidInputHelper(document.getElementById("password"), {
+                emptyText: "Şifre Zorunlu ",
+                invalidText: function (input) {
+                    return ' Şifreler aynı değil';
+                }
+            });
+        }
+        else if ($('#password').val() == $('#password_a').val() && $('#password').val() !== '') {
+            var Mail = $("#email").val();
+            var Password=  $("#password").val(md5(password));
+
+            $.ajax({
+                url: '/User/Create',
+                type: "POST",
+                dataType: "json",
+                data: { Email: Mail, Password: Password },
+                success: function (result) {
+                    $(result).load("~/Login/Login");
+
+                }
+            });
+        }
+    });
+
+
+</script>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b1f97ee805f24d7ba9f3aee89c46a09a" Name="Diagram1" ZoomLevel="64">
+        <EntityTypeShape EntityType="ExamModel.Exam" Width="1.5" PointX="3" PointY="13.75" />
+        <EntityTypeShape EntityType="ExamModel.Lesson" Width="1.5" PointX="3.75" PointY="11.125" />
+        <EntityTypeShape EntityType="ExamModel.Option" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="ExamModel.Question" Width="1.5" PointX="3" PointY="3.5" />
+        <EntityTypeShape EntityType="ExamModel.Subject" Width="1.5" PointX="0.75" PointY="4" />
+        <EntityTypeShape EntityType="ExamModel.SubjectLesson" Width="1.5" PointX="6" PointY="4" />
+        <EntityTypeShape EntityType="ExamModel.User" Width="1.5" PointX="3" PointY="7.25" />
+        <EntityTypeShape EntityType="ExamModel.UserExam" Width="1.5" PointX="5.25" PointY="7.5" />
+        <EntityTypeShape EntityType="ExamModel.UserQuestion" Width="1.5" PointX="5.25" PointY="1" />
+        <AssociationConnector Association="ExamModel.FK_Exam_ToTable" />
+        <AssociationConnector Association="ExamModel.FK_Lesson" />
+        <AssociationConnector Association="ExamModel.FK_Option" />
+        <AssociationConnector Association="ExamModel.FK_SubjectID" />
+        <AssociationConnector Association="ExamModel.FK_UserQuestion_ToQuestion" />
+        <AssociationConnector Association="ExamModel.FK_Subject" />
+        <AssociationConnector Association="ExamModel.FK_User_ToTable" />
+        <AssociationConnector Association="ExamModel.FK_UserQuestion_ToUser" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
