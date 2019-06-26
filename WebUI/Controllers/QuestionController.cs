@@ -4,6 +4,7 @@ using Examp.Dto;
 using LocationApp.Web.Mvc.Helpers;
 using Newtonsoft.Json;
 using PagedList;
+using PagedList.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;

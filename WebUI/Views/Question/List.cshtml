@@ -56,7 +56,7 @@
                                         </p>
                                     </div>
                                     <div role="tabpanel" class="tab-pane fade" id="@Html.DisplayFor(modelItem => item.QuestionID)2" aria-labelledby="profile-tab">
-                                        <p id=@Html.HiddenFor(modelItem =>item.optionDto.OptionID) class="option"></p>
+                                        <p class="option" id=@Html.HiddenFor(modelItem =>item.optionDto.OptionID)></p>
                                         A-)@Html.DisplayFor(modelItem => item.optionDto.OptionA)<br /><br />
                                         B-)@Html.DisplayFor(modelItem => item.optionDto.OptionB)<br /><br />
                                         C-)@Html.DisplayFor(modelItem => item.optionDto.OptionC)<br /><br />

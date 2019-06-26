@@ -1,4 +1,5 @@
-﻿
+﻿@model  PagedList.IPagedList<Examp.Dto.UserQuestionDto>
+@using PagedList.Mvc;
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -8,46 +9,72 @@
     <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
     <link href="~/Content/Exam/Exam.css" rel="stylesheet" />
     <style>
+        .soru {
+            text-align: justify;
+            width: 80mm;
+            border: 5mm black;
+            margin: 5mm;
+            padding: 2px 5px;
+        }
     </style>
 }
-<div class="right_col" role="main">
-    <div class="row">
-        <div class="col-md-12 col-sm-12 col-xs-12">
-            <div class="x_title">
-                <h2>Soru Giriş Ekranı</h2>
-                <div class="clearfix"></div>
+<body>
+    <div class="right_col" role="main">
+        <div class="soru">
+<div id="pre"></div>
+            <div class="soru-on-metni">
+
             </div>
-            <form id="regForm" action="#" method="post">
-                <p>Ders Seçiniz</p>
-                <p> @Html.DropDownList("LessonID", new SelectList(ViewBag.lesson, "LessonID", "LessonText", 0), new { @class = "form-control" })</p>
-                <p>Konu Seçiniz</p>
-                <p> <select class=" form-control" id="Subject" name="states[]" multiple="multiple"></select></p>
-                <p>Zorluk Derecesi Belirtiniz</p>
-                <div id="radios" class="btn-group " data-toggle="buttons">
-                    <label class="btn btn-default">
-                        <input type="radio" name="dif" id="dif1" value="1" selected /> 1
-                    </label>
-                    <label class="btn btn-default">
-                        <input type="radio" name="dif" id="dif2" value="2" /> 2
-                    </label>
-                    <label class="btn btn-default">
-                        <input type="radio" name="dif" id="dif3" value="3" /> 3
-                    </label>
-                    <label class="btn btn-default">
-                        <input type="radio" name="dif" id="dif4" value="4" /> 4
-                    </label>
-                    <label class="btn btn-default">
-                        <input type="radio" name="dif" id="dif5" value="5" /> 5
-                    </label>
-                </div><br />
-                <button type="button" id="button" name="1" class="pull-right">Oluştur</button><br />
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_title">
+                    <div class="clearfix"></div>
+                </div>
+                <form id="regForm" action="#" method="post">
+                    <h1>Sınav Hazırlama Ekranı</h1>
 
-            </form>
+                    <p>Ders Seçiniz</p>
+                    <p> @Html.DropDownList("LessonID", new SelectList(ViewBag.lesson, "LessonID", "LessonText", 0), new { @class = "form-control" })</p>
+                    <p>Konu Seçiniz</p>
+                    <p> <select class=" form-control" id="Subject" name="states[]" multiple="multiple"></select></p>
+                    <p>Soru Sayısı Belirtiniz</p>
+                    <p>
+                        <select class=" form-control" id="Number" name="Number">
+                            <option>Seçiniz</option>
+                            <option value="20">20</option>
+                            <option value="25">25</option>
+                            <option value="30">30</option>
+                            <option value="33">33</option>
+                        </select>
+                    </p>
 
+                    <p>Zorluk Derecesi Belirtiniz</p>
+                    <div id="radios" class="btn-group " data-toggle="buttons">
+                        <label class="btn btn-default">
+                            <input type="radio" name="dif" id="dif1" value="1" selected /> 1
+                        </label>
+                        <label class="btn btn-default">
+                            <input type="radio" name="dif" id="dif2" value="2" /> 2
+                        </label>
+                        <label class="btn btn-default">
+                            <input type="radio" name="dif" id="dif3" value="3" /> 3
+                        </label>
+                        <label class="btn btn-default">
+                            <input type="radio" name="dif" id="dif4" value="4" /> 4
+                        </label>
+                        <label class="btn btn-default">
+                            <input type="radio" name="dif" id="dif5" value="5" /> 5
+                        </label>
+                    </div><br />
+                    <button type="button" id="button" name="1" class="pull-right">Oluştur</button><br />
+
+                </form>
+
+            </div>
+        </div>
     </div>
-</div>
-</div>
-
+</body>
 @section Scripts{
     @Html.Partial("/Views/Shared/Partials/DataTable/_Js.cshtml")
     <script src="~/Content/Exam/Exam.js"></script>
@@ -61,7 +88,9 @@
 
         $('#Subject').on('select2:select', function (e) {
             var i = 0;
+            var j = 1;
             $("#button").click(function () {
+
                 var dif;
                 $(document).ready(function () {
                     dif = $("input[name='dif']:checked").val();
@@ -69,23 +98,51 @@
                         dif = $("input[name='dif']:checked").val();
                     });
                 });
+                var number = $('#Number').val();
                 var data = e.params.data.id;
+                $(".row").empty();
+                $(".soru").css({ "text-align": "justify", "width": "80mm", "border": "5mm black", "margin": "5mm", "padding": "2px 5px", "column - count": "2" });
+                $(".row").css({ "column - count": "2" });
+                $("#pre").append('Adı :' + '<br/>' + 'Soyadı :' + '<br/>' + 'Öğrenci Numarası :' + '<br/>' + '<br/>');
                 $.ajax({
                     url: '/Exam/GetQuestion',
                     type: "Post",
-                    data: { SubjectID: data, Difficult: dif },
+                    data: { SubjectID: data, Difficult: dif, take: number },
                     success: function (data) {
                         $.each(data, function () {
-                            alert(data[i].QuestionID);
+                            $(".soru-on-metni").append(j + ')' + (data[i].SubText) + '<br/>' + (data[i].QuestionText) + '<br/>' + 'A)' + (data[i].optionDto.OptionA) + '<br/>' + 'B)' + (data[i].optionDto.OptionB) + '<br/>' + 'C)' + (data[i].optionDto.OptionC) + '<br/>' + 'D)' + (data[i].optionDto.OptionD) + '<br/>' + 'E)' + (data[i].optionDto.OptionE) + '<br/>' + '<br/>');
                             i++;
+                            j++;
                         });
-
-                        
+                        if (j - 1 < number) {
+                            alert('Yeterli Soru Bulunamadı');
+                            location.reload();
+                        }
+                        else {
+                            printData();
+                        }
                     }
                 });
             });
 
         });
+        function printData() {
 
+
+
+            var win = window.open('', 'printwindow');
+            win.document.write('<html><head><title></title></head><body>');
+            var htmlToPrint = '' +
+                '<style type="text/css">' +
+                'body {column-count: 2}' +
+                '}' +
+                '</style>';
+            win.document.write(htmlToPrint);
+            win.document.write($(".soru").html());
+            win.document.write('</body></html>');
+            win.print();
+            win.close();
+            location.reload();
+        }
     </script>
 }

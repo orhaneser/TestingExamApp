@@ -7,9 +7,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebUI.Session;
 
 namespace WebUI.Controllers
 {
+    [UserAuthorize]
+
     public class ExamController : Controller
     {
         readonly Service.Services.QuestionService questionService = new Service.Services.QuestionService();
@@ -48,12 +51,14 @@ namespace WebUI.Controllers
             return Json(item, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
-        public JsonResult GetQuestion( Question datas)
+        public JsonResult GetQuestion( Question datas ,string take)
         {
+            var r = new Random();
             var data = JsonConvert.DeserializeObject<List<QuestionDto>>(questionService.GetAllQuestion());
-            var item = data.Where(x => x.SubjectID ==datas.SubjectID);
+            var item = data.Where(x => x.SubjectID == datas.SubjectID);
             var dif = item.Where(x => x.Difficult == datas.Difficult);
-            return Json(dif, JsonRequestBehavior.AllowGet);
+            var randomdata = dif.OrderBy(u => r.Next()).Take(Convert.ToInt32( take));
+            return Json(randomdata, JsonRequestBehavior.AllowGet);
         }
 
     }

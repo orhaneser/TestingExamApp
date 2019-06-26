@@ -8,9 +8,12 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Services.Description;
+using WebUI.Session;
 
 namespace WebUI.Controllers
 {
+    [UserAuthorize]
+
     public class UserController : Controller
     {
         readonly Service.Services.UserService userService = new Service.Services.UserService();

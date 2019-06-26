@@ -109,16 +109,40 @@ namespace Core.Logic
                 List<QuestionDto> list = new List<QuestionDto>();
                 using (UnitOfWork unitofWork = new UnitOfWork())
                 {
-                    List<Question> collection = unitofWork.GetRepository<Question>().Select(null, null).ToList();
-                    foreach (var item in collection)
+                    var query = (from q in unitofWork.GetRepository<Question>().Select(null, null)
+                                 join o in unitofWork.GetRepository<Option>().Select(null, null) on q.OptionID equals o.OptionID
+                                 select new
+                                 {
+                                     QuestionID = q.QuestionID,
+                                     AnswerKey=q.AnswerKey,
+                                     QuestionText = q.QuestionText,
+                                     OptionID = o.OptionID,
+                                     SubjectID = q.SubjectID,
+                                     Difficult=q.Difficult,
+                                     SubText=q.SubText,
+                                     A=o.OptionA,
+                                     B = o.OptionB,
+                                     C = o.OptionC,
+                                     D = o.OptionD,
+                                     E = o.OptionE,
+
+                                 });
+                    foreach (var item in query)
                     {
                         QuestionDto questionDto = new QuestionDto();
                         questionDto.QuestionID = item.QuestionID;
+                        questionDto.AnswerKey = item.AnswerKey;
                         questionDto.QuestionText = item.QuestionText;
-                        questionDto.OptionID = item.OptionID.Value;
                         questionDto.SubjectID = item.SubjectID.Value;
                         questionDto.Difficult = item.Difficult;
                         questionDto.SubText = item.SubText;
+                        questionDto.optionDto = new OptionDto();
+                        questionDto.optionDto.OptionID = item.OptionID;
+                        questionDto.optionDto.OptionA = item.A;
+                        questionDto.optionDto.OptionB = item.B;
+                        questionDto.optionDto.OptionC = item.C;
+                        questionDto.optionDto.OptionD = item.D;
+                        questionDto.optionDto.OptionE = item.E;
                         // yukarısının aynısını diğer bağlı tablolar içinde yap bilgiler gelsin
                         list.Add(questionDto);
 

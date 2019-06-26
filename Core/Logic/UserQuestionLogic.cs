@@ -110,6 +110,11 @@ namespace Core.Logic
                                  {
                                      UserQuestionID = uq.UserQuestionID,
                                      UserID = u.UserID,
+                                     uname=u.UserName,
+                                     sname=u.UserSurname,
+                                     mail=u.Mail,
+                                     role=u.Role,
+                                     pas=u.Password,
                                      QuestionID = q.QuestionID,
                                      QText = q.QuestionText,
                                      QSubtext = q.SubText,

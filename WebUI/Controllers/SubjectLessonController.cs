@@ -6,9 +6,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using WebUI.Session;
 
 namespace WebUI.Controllers
 {
+    [UserAuthorize]
+
     public class SubjectLessonController : Controller
     {
         readonly Service.Services.SubjectLessonService subjectLessonService = new Service.Services.SubjectLessonService();
