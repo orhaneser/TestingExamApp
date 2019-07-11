@@ -25,7 +25,7 @@ namespace WebUI.Controllers
             var data = JsonConvert.DeserializeObject<List<UserDto>>(userService.GetAllUser());
             if (data.Any(x => x.Mail == Email && x.Password == Password))
             {
-                UserDto loginUser = data.Where(x => x.Mail == Email && x.Password == Password &&x.Role==false).FirstOrDefault();
+                UserDto loginUser = data.Where(x => x.Mail == Email && x.Password == Password).FirstOrDefault();
                 Session["Session"] = loginUser.UserID;
                 return RedirectToAction("Create", "Question");
 

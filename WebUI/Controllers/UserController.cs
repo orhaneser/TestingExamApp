@@ -12,7 +12,6 @@ using WebUI.Session;
 
 namespace WebUI.Controllers
 {
-    [UserAuthorize]
 
     public class UserController : Controller
     {
@@ -41,6 +40,8 @@ namespace WebUI.Controllers
 
             return RedirectToAction("Login","Login");
         }
+        [UserAuthorize]
+
         [HttpGet]
         public ActionResult Edit(int? id)
         {
@@ -52,6 +53,8 @@ namespace WebUI.Controllers
             else
                 return HttpNotFound();
         }
+        [UserAuthorize]
+
         [HttpPost]
         public ActionResult Edit(UserDto model)
         {
@@ -59,6 +62,8 @@ namespace WebUI.Controllers
             ViewBag.Message = Helper.GetResultMessage(result.Result, result.ResultDescription);
             return View();
         }
+        [UserAuthorize]
+
         [HttpGet]
         public ActionResult List()
         {
